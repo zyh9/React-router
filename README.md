@@ -42,3 +42,11 @@
 		
 		<BrowserRouter>在两者中更为常用，原因是它使用了HTML5的history API来记录你的路由历史
 		而<HashRouter>则使用URL(window.location.hash)的hash部分来记录。如果你想兼容老式浏览器，你应该使用<HashRouter>
+
+### Links and Routes
+
+		<Route>是React Router里最重要的组件。若当前路径匹配route的路径，它会渲染对应的UI。
+		理想来说，<Route>应该有一个叫path的prop，当路径名跟当前路径匹配才会渲染。
+		
+		另一方面，<Link>用来跳转页面。可以类比HTML的锚元素。然而，使用锚链接会导致浏览器的刷新，这不是我们想要的。
+		所以，我们可以使用<Link>来跳转至具体的URL，并且视图重新渲染不会导致浏览器刷新。
