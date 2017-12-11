@@ -23,6 +23,9 @@
 		  <Route path="/user" component={User}/>
 		</Router>
 		
+		在这里，"/"同时匹配"/"和"/order"。因此，所有路由都匹配并被渲染。
+		我们该如何避免呢？应该给 path='/'的路由传递exact= {true}
+		
 		Router
 		
 			像上面的例子，你需要一个<Router>组件和一些<Route>组件来创建一个基本的路由。
@@ -56,11 +59,67 @@
 			其他方法：
 			
 				例如history.goBack()和history.goForward() - 用来根据页面的后退和前进来跳转history堆栈
-
-### Links and Routes
-
-		<Route>是React Router里最重要的组件。若当前路径匹配route的路径，它会渲染对应的UI。
-		理想来说，<Route>应该有一个叫path的prop，当路径名跟当前路径匹配才会渲染。
 		
-		另一方面，<Link>用来跳转页面。可以类比HTML的锚元素。然而，使用锚链接会导致浏览器的刷新，这不是我们想要的。
-		所以，我们可以使用<Link>来跳转至具体的URL，并且视图重新渲染不会导致浏览器刷新。
+		Links and Routes
+		
+			<Route>是React Router里最重要的组件。若当前路径匹配route的路径，它会渲染对应的UI。
+			理想来说，<Route>应该有一个叫path的prop，当路径名跟当前路径匹配才会渲染。
+			
+			另一方面，<Link>用来跳转页面。可以类比HTML的锚元素。然而，使用锚链接会导致浏览器的刷新，这不是我们想要的。
+			所以，我们可以使用<Link>来跳转至具体的URL，并且视图重新渲染不会导致浏览器刷新。
+
+### Demo1：基础路由
+
+		```html
+		/* Import statements */
+		import React, { Component } from 'react';
+		import { Link, Route, Switch } from 'react-router-dom';
+		
+		/* Home component */
+		const Home = () => (
+		  <div>
+		    <h2>我是首页</h2>
+		  </div>
+		)
+		
+		/* Order component */
+		const Order = () => (
+		  <div>
+		    <h2>我是订单页</h2>
+		  </div>
+		)
+		
+		/* User component */
+		const User = () => (
+		  <div>
+		    <h2>我是用户页</h2>
+		  </div>
+		)
+		
+		/* App component */
+		class App extends React.Component {
+		  render() {
+		    return (
+		      <div>
+		          <ul className="nav navbar-nav">
+		
+		           /* 使用<Link>来跳转至具体的URL */
+		            <li><Link to="/">首页</Link></li>
+		            <li><Link to="/order">订单</Link></li>
+		            <li><Link to="/user">用户</Link></li>
+		
+		          </ul>
+		
+		          /* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
+		           <Route exact path="/" component={Home}/>
+		           <Route path="/order" component={Order}/>
+		           <Route path="/user" component={User}/>
+		
+		      </div>
+		    )
+		  }
+		}
+		```
+### 嵌套路由
+
+		
