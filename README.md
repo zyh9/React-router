@@ -25,23 +25,37 @@
 		
 		Router
 		
-		像上面的例子，你需要一个<Router>组件和一些<Route>组件来创建一个基本的路由。
-		由于我们创建的是一个基于浏览器的应用，我们可以从React Router API中使用这两种类型的路由：
+			像上面的例子，你需要一个<Router>组件和一些<Route>组件来创建一个基本的路由。
+			由于我们创建的是一个基于浏览器的应用，我们可以从React Router API中使用这两种类型的路由：
+				
+				<BrowserRouter>
+				
+				<HashRouter>
 			
-			<BrowserRouter>
+			它们之间主要的区别，可以在它们所创建的URL明显看出：
 			
-			<HashRouter>
-		
-		它们之间主要的区别，可以在它们所创建的URL明显看出：
-		
-			// <BrowserRouter>
-			http://example.com/about
+				// <BrowserRouter>
+				http://example.com/about
+				
+				// <HashRouter>
+				http://example.com/#/about
 			
-			// <HashRouter>
-			http://example.com/#/about
+			<BrowserRouter>在两者中更为常用，原因是它使用了HTML5的history API来记录你的路由历史
+			而<HashRouter>则使用URL(window.location.hash)的hash部分来记录。如果你想兼容老式浏览器，你应该使用<HashRouter>
 		
-		<BrowserRouter>在两者中更为常用，原因是它使用了HTML5的history API来记录你的路由历史
-		而<HashRouter>则使用URL(window.location.hash)的hash部分来记录。如果你想兼容老式浏览器，你应该使用<HashRouter>
+		history
+		
+			history是一个让你轻松管理所有Javascript运行的会话记录的Javascript库。
+			history提供了简洁的API，让你可以管理history堆栈，跳转，确认跳转，以及保持会话之间的状态。
+			
+			每个router组件创建了一个history对象，用来记录当前路径(history.location)，上一步路径也存储在堆栈中。
+			当前路径改变时，视图会重新渲染，给你一种跳转的感觉。当前路径又是如何改变的呢？
+			history对象有history.push()和history.replace()这些方法来实现。
+			当你点击<Link>组件会触发history.push()，使用<Redirect>则会调用history.replace()。
+			
+			其他方法：
+			
+				例如history.goBack()和history.goForward() - 用来根据页面的后退和前进来跳转history堆栈
 
 ### Links and Routes
 
