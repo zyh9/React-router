@@ -123,3 +123,24 @@
 ### 嵌套路由
 
 		
+
+1.项目首页引入cube-ui的scroll组件，并给其嵌套轮播图和类型选择的容器， 
+官方并没有提出可以嵌套组件的使用方法，所以和swiper的搭配出现了不兼容的情况。 
+目前是去掉了swiper的轮播图的自动轮播，后续会使用cube-ui的slider作嵌套处理 
+
+2.移动端富文本编辑器的使用，引重置样式中包含-webkit-user-select: none;的样式， 
+因为-webkit-user-select: none;会产生一些问题，导致IOS下输入元素无光标显示，可添加以下样式解决 
+		element{ 
+		-webkit-user-select: text; 
+		-user-select: text; 
+		} 
+
+3.uunote在pc端展示页面通过设备判断navigator.userAgent处理 
+
+		let n = navigator.userAgent.toLowerCase(); 
+		if (n.indexOf('iphone') == -1 && n.indexOf('ipad') == -1 && n.indexOf('android') == -1) { 
+			//... 
+		} 
+		} 
+
+4.不存在token的情况，重定向至login登录页，导航守卫的使用，导致登录需点击两次才可登录成功，目前使用监听路由路径来解决
