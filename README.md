@@ -130,6 +130,7 @@
 
 2.移动端富文本编辑器的使用，引重置样式中包含-webkit-user-select: none;的样式， 
 因为-webkit-user-select: none;会产生一些问题，导致IOS下输入元素无光标显示，可添加以下样式解决 
+
 		element{ 
 		-webkit-user-select: text; 
 		-user-select: text; 
