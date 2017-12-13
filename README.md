@@ -102,16 +102,16 @@
 	  render() {
 	    return (
 	      	<div>
-          		<ul className="list">
-           			/* 使用<Link>来跳转至具体的URL */
-            		<li><Link to="/">首页</Link></li>
-            		<li><Link to="/order">订单</Link></li>
-            		<li><Link to="/user">用户</Link></li>
-          		</ul>
-          		/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
-           		<Route exact path="/" component={Home}/>
-           		<Route path="/order" component={Order}/>
-           		<Route path="/user" component={User}/>
+				<ul className="list">
+					/* 使用<Link>来跳转至具体的URL */
+					<li><Link to="/">首页</Link></li>
+					<li><Link to="/order">订单</Link></li>
+					<li><Link to="/user">用户</Link></li>
+				</ul>
+				/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
+				<Route exact path="/" component={Home}/>
+				<Route path="/order" component={Order}/>
+				<Route path="/user" component={User}/>
 	      	</div>
 	    )
 	  }
@@ -183,11 +183,11 @@
 					<li><Link to="/order">我是订单页</Link></li>
 					<li><Link to="/user">我是用户页</Link></li>
 				</ul>
-			    <Switch>
-			      	<Route exact path="/" component={Home}/>
-			      	<Route path="/order" component={Order}/>
-			       	<Route path="/user" component={User}/>
-			    </Switch>
+				<Switch>
+					<Route exact path="/" component={Home}/>
+					<Route path="/order" component={Order}/>
+					<Route path="/user" component={User}/>
+				</Switch>
 		    </div>
 	    )
 	  }
@@ -373,6 +373,6 @@
 	export default Product;
 ```
 
-		find方法用来查找数组中对象的id属性等于match.params.productId。
+		数组find方法用来查找数组中对象的id属性等于match.params.productId。
 		如果product存在，productData就会展示，如果不存在，Product不存在的信息就会被渲染。
 
