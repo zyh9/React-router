@@ -44,7 +44,8 @@
 				http://example.com/#/about
 			
 			<BrowserRouter>在两者中更为常用，原因是它使用了HTML5的history API来记录你的路由历史
-			而<HashRouter>则使用URL(window.location.hash)的hash部分来记录。如果你想兼容老式浏览器，你应该使用<HashRouter>
+			而<HashRouter>则使用URL(window.location.hash)的hash部分来记录。
+			如果你想兼容老式浏览器，你应该使用<HashRouter>
 		
 		history
 		
@@ -101,6 +102,7 @@
 	  render() {
 	    return (
 	      <div>
+	      
           	<ul className="nav navbar-nav">
 			
            		/* 使用<Link>来跳转至具体的URL */
@@ -110,10 +112,10 @@
 			
           	</ul>
 			
-          	/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
-           	<Route exact path="/" component={Home}/>
-           	<Route path="/order" component={Order}/>
-           	<Route path="/user" component={User}/>
+	          	/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
+	           	<Route exact path="/" component={Home}/>
+	           	<Route path="/order" component={Order}/>
+	           	<Route path="/user" component={User}/>
 			
 	      </div>
 	    )
@@ -140,10 +142,9 @@
 				
 		Path and match
 		
-			path用来标识路由匹配的URL部分。React Router使用了Path-to-RegExp库将路径字符串转为正则表达式。然后正则表达式会匹配当前路径。
-			
-			当路由路径和当前路径成功匹配，会生成一个对象，我们叫它match。match对象有更多关于URL和path的信息。
-			这些信息可以通过它的属性获取，如下所示：
+			path用来标识路由匹配的URL部分。React Router使用了Path-to-RegExp库将路径字符串转为正则表达式。
+			然后正则表达式会匹配当前路径。当路由路径和当前路径成功匹配，会生成一个对象，我们叫它match。
+			match对象有更多关于URL和path的信息。这些信息可以通过它的属性获取，如下所示：
 			
 				match.url -- 返回URL匹配部分的字符串。对于创建嵌套的<Link>很有用。
 				
@@ -180,7 +181,6 @@
 	
 	class App extends Component {
 	  render() {
-	
 	    return (
 	      	<div>
 				<ul className="list">
@@ -192,7 +192,7 @@
 			    <Switch>
 			      	<Route exact path="/" component={Home}/>
 			      	<Route path="/order" component={Order}/>
-			       <Route path="/user" component={User}/>
+			       	<Route path="/user" component={User}/>
 			    </Switch>
 			
 		    </div>
@@ -212,18 +212,20 @@
 	import { Link, Route } from 'react-router-dom';
 	
 	const Order = ({ match }) => {
-	return(
-		<div>
-		
-			<ul>
-			    <li><Link to={`${match.url}/order1`}>订单1</Link></li>
-			    <li><Link to={`${match.url}/order2`}>订单2</Link></li>
-			    <li><Link to={`${match.url}/order3`}>订单3</Link></li>
-		  	</ul>
-		  	
-	  		<Route path={`${match.path}/:order`} render= {({match}) =>( <div><h3> {match.params.name} </h3></div>)}/>
-	  		
-	  	</div>)
+		return(
+			<div>
+			
+				<ul>
+				    <li><Link to={`${match.url}/order1`}>订单1</Link></li>
+				    <li><Link to={`${match.url}/order2`}>订单2</Link></li>
+				    <li><Link to={`${match.url}/order3`}>订单3</Link></li>
+			  	</ul>
+			  	
+		  		<Route path={`${match.path}/:order`}
+		  			render= {({match}) =>( <div><h3> {match.params.name} </h3></div>)}/>
+		  		
+		  	</div>
+		)
 	}
 	export default Order;
 ```
@@ -234,7 +236,8 @@
 		<Route path={`${match.path}/:name`}
 			render= {({match}) =>( <div><h3> {match.params.name} </h3></div>)}/>
 		
-		这是我们首次尝试动态路由。不同于硬编码路由，我们给pathname使用了变量。:name是路径参数，获取order/之后到下一条斜杠之间的所有内容。
+		这是我们首次尝试动态路由。不同于硬编码路由，我们给pathname使用了变量。
+		:name是路径参数，获取order/之后到下一条斜杠之间的所有内容。
 		所以，类似user/info的路径名会生成如下的一个params对象：
 		
 		{
