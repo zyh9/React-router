@@ -71,7 +71,7 @@
 
 ### Demo1：基础路由
 
-```html
+```javascript
 	/* Import statements */
 	import React, { Component } from 'react';
 	import { Link, Route, Switch } from 'react-router-dom';
@@ -101,23 +101,18 @@
 	class App extends React.Component {
 	  render() {
 	    return (
-	      <div>
-	      
-          	<ul className="nav navbar-nav">
-			
-           		/* 使用<Link>来跳转至具体的URL */
-            	<li><Link to="/">首页</Link></li>
-            	<li><Link to="/order">订单</Link></li>
-            	<li><Link to="/user">用户</Link></li>
-			
-          	</ul>
-			
-	          	/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
-	           	<Route exact path="/" component={Home}/>
-	           	<Route path="/order" component={Order}/>
-	           	<Route path="/user" component={User}/>
-			
-	      </div>
+	      	<div>
+          		<ul className="list">
+           			/* 使用<Link>来跳转至具体的URL */
+            		<li><Link to="/">首页</Link></li>
+            		<li><Link to="/order">订单</Link></li>
+            		<li><Link to="/user">用户</Link></li>
+          		</ul>
+          		/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
+           		<Route exact path="/" component={Home}/>
+           		<Route path="/order" component={Order}/>
+           		<Route path="/user" component={User}/>
+	      	</div>
 	    )
 	  }
 	}
@@ -172,9 +167,9 @@
 		之前，我们给"/","/order"和"/user"创建了路由。
 		但如果我们想要/order/order1这种形式的URL呢？
 
-> src/App.js
+#### src/App.js
 
-```html
+```javascript
 	import React, { Component } from 'react';
 	import { Link, Route, Switch } from 'react-router-dom';
 	import Order from './Order';
@@ -188,13 +183,11 @@
 					<li><Link to="/order">我是订单页</Link></li>
 					<li><Link to="/user">我是用户页</Link></li>
 				</ul>
-			
 			    <Switch>
 			      	<Route exact path="/" component={Home}/>
 			      	<Route path="/order" component={Order}/>
 			       	<Route path="/user" component={User}/>
 			    </Switch>
-			
 		    </div>
 	    )
 	  }
@@ -205,25 +198,22 @@
 		不像React Router之前的版本，在版本4中，嵌套的<Route>最好放在父元素里面。
 		所以，Order组件就是这里的父组件，我们将在父组件中定义order/:name路由。
 
-> src/Order.js
+#### src/Order.js
 
-```html
+```javascript
 	import React from 'react';
 	import { Link, Route } from 'react-router-dom';
 	
 	const Order = ({ match }) => {
 		return(
 			<div>
-			
 				<ul>
-				    <li><Link to={`${match.url}/order1`}>订单1</Link></li>
-				    <li><Link to={`${match.url}/order2`}>订单2</Link></li>
-				    <li><Link to={`${match.url}/order3`}>订单3</Link></li>
+					<li><Link to={`${match.url}/order1`}>订单1</Link></li>
+					<li><Link to={`${match.url}/order2`}>订单2</Link></li>
+					<li><Link to={`${match.url}/order3`}>订单3</Link></li>
 			  	</ul>
-			  	
 		  		<Route path={`${match.path}/:order`}
 		  			render= {({match}) =>( <div><h3> {match.params.name} </h3></div>)}/>
-		  		
 		  	</div>
 		)
 	}
@@ -238,11 +228,151 @@
 		
 		这是我们首次尝试动态路由。不同于硬编码路由，我们给pathname使用了变量。
 		:name是路径参数，获取order/之后到下一条斜杠之间的所有内容。
-		所以，类似user/info的路径名会生成如下的一个params对象：
+		所以，类似order/order1的路径名会生成如下的一个params对象：
 		
-		{
-		  name: 'info'
-		}
+			{
+			  name: 'order1'
+			}
 		
 		参数可以通过match.params或props.match.params来获取，取决于传递哪种props。
 		另外有趣的是我们使用了renderprop。render props非常适合行内函数，这样不需要单独拆分组件。
+
+### Demo3：带Path参数的嵌套路由
+
+		我们让事情变得再复杂一些，可以吗？一个真实的路由应该是根据数据，然后动态展示。
+		假设我们获取了从服务端API返回的product数据，如下所示：
+
+#### src/Products.js
+
+```javascript
+	const productsData = [
+        {
+            id: 1,
+            name: 'NIKE 蓝色运动鞋',
+            status: '有货'
+    
+        },
+        {
+            id: 2,
+            name: 'NIKE 拖鞋',
+            status: '缺货'
+    
+        },
+        {
+            id: 3,
+            name: '特步 蓝色运动鞋',
+            status: '有货'
+    
+        },
+        {
+            id: 4,
+            name: '特步 拖鞋',
+            status: '缺货'
+    
+        },
+    ]
+```
+
+		我们需要根据下面这些路径创建路由：
+		
+		/products -- 这个路径应该展示产品列表。
+		
+		/products/:productId -- 如果产品有:productId，
+		这个页面应该展示该产品的数据，如果没有，就该展示一个错误信息。
+
+#### src/Products.js
+
+```javascript
+	import React,{Component} from 'react';
+	import {Link,Route} from 'react-router-dom';
+	import Product from './Product';
+	
+	const Products = ({match}) =>{
+	    const productsData = [
+	        {
+	            id: 1,
+	            name: 'NIKE 蓝色运动鞋',
+	            status: '有货'
+	    
+	        },
+	        {
+	            id: 2,
+	            name: 'NIKE 拖鞋',
+	            status: '缺货'
+	    
+	        },
+	        {
+	            id: 3,
+	            name: '特步 蓝色运动鞋',
+	            status: '有货'
+	    
+	        },
+	        {
+	            id: 4,
+	            name: '特步 拖鞋',
+	            status: '缺货'
+	    
+	        },
+	    ]
+	
+	    let linkList = productsData.map(e =>(
+	            <li key={e.id}>
+	                <Link to={`${match.url}/${e.id}`}>{e.name}</Link>
+	            </li>
+	        )
+	    )
+	
+	    return(
+	        <div className="products">
+	            <h3>产品</h3>
+	            <ul> {linkList} </ul>
+	            <Route path={`${match.url}/:productId`}
+	                render={ (props) => <Product data= {productsData} {...props} />}/>
+	            <Route exact path={match.url}
+	                render={() => (<div><h3>请选择一个产品</h3></div>)}/>
+	        </div>
+	    )
+	}
+	
+	export default Products;
+```
+
+		首先，我们通过productsData.id创建一列<Links>，并把它存储在linkList。
+		路由从路径字符串根据匹配的对应产品id获取参数。
+		
+		<Route path={`${match.url}/:productId`}
+		render={ (props) => <Product data= {productsData} {...props} />}/>
+		你可能期望使用component = { Product }来替代行内render函数。
+		问题是，我们不仅需要productsData，并顺带把剩余prop也传给Product组件。
+		尽管你还有其他方法，不过我觉的这是最简单的方法了。{...props}使用ES6的扩展运算符 将所有prop传给组件。
+
+#### src/Product.js
+
+```javascript
+	import React,{Component} from 'react';
+	
+	const Product = ({match,data}) => {
+	    let product= data.find(e => e.id == match.params.productId);
+	    let productData;
+	    if(product)
+	        productData =(
+	            <div>
+	                <h3> {product.name} </h3>
+	                <h3> {product.status} </h3>
+	            </div>
+	        )
+	    else productData = <h3>抱歉，产品不存在</h3>
+	
+	    return (
+	        <div>
+	           {productData}
+	        </div>
+	    )
+	}
+	
+	export default Product;
+```
+
+		find方法用来查找数组中对象的id属性等于match.params.productId。
+		如果product存在，productData就会展示，如果不存在，Product不存在的信息就会被渲染。
+

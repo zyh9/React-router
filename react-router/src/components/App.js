@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {Route,Link,Switch} from 'react-router-dom';
 import './style.less';
+import Products from './Products';
+import Order from './Order';
 
 // 两种写法是一样的
 // class Home extends Component{
@@ -21,32 +23,6 @@ const Home = () =>{
     )
 }
 
-// class Order extends Component{
-//     render(){
-//         return(
-//             <div>
-//                 <h3>我是订单</h3>
-//             </div>
-//         )
-//     }
-// }
-
-const Order = ({match}) =>{
-    // console.log(match)
-    return(
-        <div>
-            {/* <h3>我是订单</h3> */}
-            <ul>
-                <li><Link to={`${match.url}/order1`}>订单1</Link></li>
-                <li><Link to={`${match.url}/order2`}>订单2</Link></li>
-                <li><Link to={`${match.url}/order3`}>订单3</Link></li>
-            </ul>
-            <Route path={`${match.path}/:order`} 
-            render={({match})=>(<div><h3>{match.params.order}</h3></div>)}/>
-        </div>
-    )
-}
-
 class User extends Component{
     render(){
         return(
@@ -63,9 +39,10 @@ class App extends Component{
     // }
     render(){
         return(
-            <div>
+            <div className="app">
                 <Link to="/">首页</Link>
                 <Link to="/order">订单</Link>
+                <Link to="/products">产品</Link>
                 <Link to="/user">用户</Link>
 
                 {/* 不加switch的后果就是一旦有与之匹配的路由就会显示 */}
@@ -77,8 +54,9 @@ class App extends Component{
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/order" component={Order} />
+                    <Route path="/products" component={Products} />
                     <Route path="/user" component={User} />
-                    {/* <Route path="/:id" render = {()=> (<p>不加switch的后果</p>)}/> */}
+                    <Route path="/:id" render = {()=> (<p>不加switch的后果</p>)}/>
                 </Switch>
             </div>
         )
