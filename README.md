@@ -101,18 +101,18 @@
 	class App extends React.Component {
 	  render() {
 	    return (
-	      	<div>
-				<ul className="list">
-					/* 使用<Link>来跳转至具体的URL */
-					<li><Link to="/">首页</Link></li>
-					<li><Link to="/order">订单</Link></li>
-					<li><Link to="/user">用户</Link></li>
-				</ul>
-				/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
-				<Route exact path="/" component={Home}/>
-				<Route path="/order" component={Order}/>
-				<Route path="/user" component={User}/>
-	      	</div>
+		  <div>
+		    <ul className="list">
+		      /* 使用<Link>来跳转至具体的URL */
+		      <li><Link to="/">首页</Link></li>
+		      <li><Link to="/order">订单</Link></li>
+		      <li><Link to="/user">用户</Link></li>
+		    </ul>
+		    /* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
+		    <Route exact path="/" component={Home}/>
+		    <Route path="/order" component={Order}/>
+		    <Route path="/user" component={User}/>
+		  </div>
 	    )
 	  }
 	}
@@ -158,7 +158,8 @@
 			<Route path="/order" component={Order}/>
 			<Route path="/user" component={User}/>
 			<Route path="/:id" render = {()=> (<p>不加Switch的后果，一旦与之匹配就会被渲染出来</p>)}/>
-			当URL为/order，所有匹配/order路径的route都会被渲染。所以，那个path为:id的<Route>会跟着order组件一块渲染。
+			当URL为/order，所有匹配/order路径的route都会被渲染。
+			所以，那个path为:id的<Route>会跟着order组件一块渲染。
 			设计就是如此。但是，若这不是你想要的结果，你应该给你的routes添加<Switch>组件。
 			有<Switch>组件的话，只有第一个匹配路径的子<Route>会渲染。
 
@@ -177,18 +178,18 @@
 	class App extends Component {
 	  render() {
 	    return (
-	      	<div>
-				<ul className="list">
-					<li><Link to="/">我是首页</Link></li>
-					<li><Link to="/order">我是订单页</Link></li>
-					<li><Link to="/user">我是用户页</Link></li>
-				</ul>
-				<Switch>
-					<Route exact path="/" component={Home}/>
-					<Route path="/order" component={Order}/>
-					<Route path="/user" component={User}/>
-				</Switch>
-		    </div>
+		  <div>
+		    <ul className="list">
+		      <li><Link to="/">我是首页</Link></li>
+		      <li><Link to="/order">我是订单页</Link></li>
+		      <li><Link to="/user">我是用户页</Link></li>
+		    </ul>
+		    <Switch>
+		      <Route exact path="/" component={Home}/>
+		      <Route path="/order" component={Order}/>
+		      <Route path="/user" component={User}/>
+		    </Switch>
+		  </div>
 	    )
 	  }
 	}
