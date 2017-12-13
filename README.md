@@ -17,14 +17,14 @@
 
 		下面是路由的例子：
 		
-		<Router>
-		  <Route exact path="/" component={Home}/>
-		  <Route path="/order" component={Order}/>
-		  <Route path="/user" component={User}/>
-		</Router>
-		
-		在这里，"/"同时匹配"/"和"/order"。因此，所有路由都匹配并被渲染。
-		我们该如何避免呢？应该给 path='/'的路由传递exact= {true}
+			<Router>
+			  <Route exact path="/" component={Home}/>
+			  <Route path="/order" component={Order}/>
+			  <Route path="/user" component={User}/>
+			</Router>
+			
+			在这里，"/"同时匹配"/"和"/order"。因此，所有路由都匹配并被渲染。
+			我们该如何避免呢？应该给 path='/'的路由传递exact= {true}
 		
 		Router
 		
@@ -70,56 +70,176 @@
 
 ### Demo1：基础路由
 
-		```html
-		/* Import statements */
-		import React, { Component } from 'react';
-		import { Link, Route, Switch } from 'react-router-dom';
-		
-		/* Home component */
-		const Home = () => (
-		  <div>
-		    <h2>我是首页</h2>
-		  </div>
-		)
-		
-		/* Order component */
-		const Order = () => (
-		  <div>
-		    <h2>我是订单页</h2>
-		  </div>
-		)
-		
-		/* User component */
-		const User = () => (
-		  <div>
-		    <h2>我是用户页</h2>
-		  </div>
-		)
-		
-		/* App component */
-		class App extends React.Component {
-		  render() {
-		    return (
-		      <div>
-		          <ul className="nav navbar-nav">
-		
-		           /* 使用<Link>来跳转至具体的URL */
-		            <li><Link to="/">首页</Link></li>
-		            <li><Link to="/order">订单</Link></li>
-		            <li><Link to="/user">用户</Link></li>
-		
-		          </ul>
-		
-		          /* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
-		           <Route exact path="/" component={Home}/>
-		           <Route path="/order" component={Order}/>
-		           <Route path="/user" component={User}/>
-		
-		      </div>
-		    )
-		  }
-		}
-		```
+```html
+	/* Import statements */
+	import React, { Component } from 'react';
+	import { Link, Route, Switch } from 'react-router-dom';
+	
+	/* Home component */
+	const Home = () => (
+	  <div>
+	    <h2>我是首页</h2>
+	  </div>
+	)
+	
+	/* Order component */
+	const Order = () => (
+	  <div>
+	    <h2>我是订单页</h2>
+	  </div>
+	)
+	
+	/* User component */
+	const User = () => (
+	  <div>
+	    <h2>我是用户页</h2>
+	  </div>
+	)
+	
+	/* App component */
+	class App extends React.Component {
+	  render() {
+	    return (
+	      <div>
+          	<ul className="nav navbar-nav">
+			
+           		/* 使用<Link>来跳转至具体的URL */
+            	<li><Link to="/">首页</Link></li>
+            	<li><Link to="/order">订单</Link></li>
+            	<li><Link to="/user">用户</Link></li>
+			
+          	</ul>
+			
+          	/* <Route>的路径与当前路径匹配，对应组件就会被渲染 */
+           	<Route exact path="/" component={Home}/>
+           	<Route path="/order" component={Order}/>
+           	<Route path="/user" component={User}/>
+			
+	      </div>
+	    )
+	  }
+	}
+```
+
 ### 嵌套路由
 
+		<Route>有三个可以用来定义要渲染内容的props：
 		
+			component：
+			
+				当URL匹配时，router会将传递的组件使用React.createElement来生成一个React元素
+			
+			render：
+			
+				适合行内渲染。在当前路径匹配路由路径时，renderprop期望一个函数返回一个元素
+			
+			children：
+			
+				childrenprop跟render很类似，也期望一个函数返回一个React元素。
+				然而，不管路径是否匹配，children都会渲染。
+				
+		Path and match
+		
+			path用来标识路由匹配的URL部分。React Router使用了Path-to-RegExp库将路径字符串转为正则表达式。然后正则表达式会匹配当前路径。
+			
+			当路由路径和当前路径成功匹配，会生成一个对象，我们叫它match。match对象有更多关于URL和path的信息。
+			这些信息可以通过它的属性获取，如下所示：
+			
+				match.url -- 返回URL匹配部分的字符串。对于创建嵌套的<Link>很有用。
+				
+				match.path -- 返回路由路径字符串 - 就是<Route path="">。将用来创建嵌套的<Route>。
+				
+				match.isExact -- 返回布尔值，如果准确（没有任何多余字符）匹配则返回true。
+				
+				match.params -- 返回一个对象包含Path-to-RegExp包从URL解析的键值对。
+		
+		Switch组件
+		
+			当一起使用多个<Route>时，所有匹配的routes都会被渲染。
+			根据Demo1的代码，我添加一个新的route来验证为什么<Switch>很有用。
+			
+			<Route exact path="/" component={Home}/>
+			<Route path="/order" component={Order}/>
+			<Route path="/user" component={User}/>
+			<Route path="/:id" render = {()=> (<p>不加Switch的后果，一旦与之匹配就会被渲染出来</p>)}/>
+			当URL为/order，所有匹配/order路径的route都会被渲染。所以，那个path为:id的<Route>会跟着order组件一块渲染。
+			设计就是如此。但是，若这不是你想要的结果，你应该给你的routes添加<Switch>组件。
+			有<Switch>组件的话，只有第一个匹配路径的子<Route>会渲染。
+
+### Demo2：嵌套路由
+
+		之前，我们给"/","/order"和"/user"创建了路由。
+		但如果我们想要/order/order1这种形式的URL呢？
+
+> src/App.js
+
+```html
+	import React, { Component } from 'react';
+	import { Link, Route, Switch } from 'react-router-dom';
+	import Order from './Order';
+	
+	class App extends Component {
+	  render() {
+	
+	    return (
+	      	<div>
+				<ul className="list">
+					<li><Link to="/">我是首页</Link></li>
+					<li><Link to="/order">我是订单页</Link></li>
+					<li><Link to="/user">我是用户页</Link></li>
+				</ul>
+			
+			    <Switch>
+			      	<Route exact path="/" component={Home}/>
+			      	<Route path="/order" component={Order}/>
+			       <Route path="/user" component={User}/>
+			    </Switch>
+			
+		    </div>
+	    )
+	  }
+	}
+	export default App;
+```
+
+		不像React Router之前的版本，在版本4中，嵌套的<Route>最好放在父元素里面。
+		所以，Order组件就是这里的父组件，我们将在父组件中定义order/:name路由。
+
+> src/Order.js
+
+```html
+	import React from 'react';
+	import { Link, Route } from 'react-router-dom';
+	
+	const Order = ({ match }) => {
+	return(
+		<div>
+		
+			<ul>
+			    <li><Link to={`${match.url}/order1`}>订单1</Link></li>
+			    <li><Link to={`${match.url}/order2`}>订单2</Link></li>
+			    <li><Link to={`${match.url}/order3`}>订单3</Link></li>
+		  	</ul>
+		  	
+	  		<Route path={`${match.path}/:order`} render= {({match}) =>( <div><h3> {match.params.name} </h3></div>)}/>
+	  		
+	  	</div>)
+	}
+	export default Order;
+```
+
+		首先，我们给嵌套路由定义了一些Link。之前提到过，match.url用来构建嵌套链接，match.path用来构建嵌套路由。
+		如果你对match有不理解的概念，console.log(match)会提供一些有用的信息来帮助你了解它。
+		
+		<Route path={`${match.path}/:name`}
+			render= {({match}) =>( <div><h3> {match.params.name} </h3></div>)}/>
+		
+		这是我们首次尝试动态路由。不同于硬编码路由，我们给pathname使用了变量。:name是路径参数，获取order/之后到下一条斜杠之间的所有内容。
+		所以，类似user/info的路径名会生成如下的一个params对象：
+		
+		{
+		  name: 'info'
+		}
+		
+		参数可以通过match.params或props.match.params来获取，取决于传递哪种props。
+		另外有趣的是我们使用了renderprop。render props非常适合行内函数，这样不需要单独拆分组件。

@@ -41,8 +41,8 @@ const Order = ({match}) =>{
                 <li><Link to={`${match.url}/order2`}>订单2</Link></li>
                 <li><Link to={`${match.url}/order3`}>订单3</Link></li>
             </ul>
-            <Route path={`${match.url}/:order`} 
-            render={({match})=>(<div><h3>{match.url}</h3></div>)}/>
+            <Route path={`${match.path}/:order`} 
+            render={({match})=>(<div><h3>{match.params.order}</h3></div>)}/>
         </div>
     )
 }
