@@ -377,3 +377,128 @@
 		数组find方法用来查找数组中对象的id属性等于match.params.productId。
 		如果product存在，productData就会展示，如果不存在，Product不存在的信息就会被渲染。
 
+### 保护式路由
+
+		最后一个demo，我们将围绕保护式路由的技术进行讨论。
+		那么，如果有人想进入/admin页面，他们会被要求先登录。
+		然而，在我们保护路由之前还需要考虑一些事情。
+		
+		重定向
+		
+			类似服务端重定向，<Redirect>会将history堆栈的当前路径替换为新路径。
+			新路径通过to prop传递。如何使用<Redirect>？
+			
+				<Redirect to={{pathname: '/login', state: {from: props.location}}}
+				
+				如果有人已经注销了账户，想进入/admin页面，他们会被重定向到/login页面。
+				当前路径的信息是通过state传递的，若用户信息验证成功，用户会被重定向回初始路径。
+				在子组件中，你可以通过this.props.location.state获取state的信息。
+				
+		自定义路由
+		
+			自定义路由最适合描述组件里嵌套的路由。
+			如果我们需要确定一个路由是否应该渲染，最好的方法是写个自定义组件。
+			下面是通过其他路由来定义自定义路由。
+
+#### src/App.js
+
+```javascript
+	// 私有路由功能
+	const PrivateRoute = ({ component: Component, ...rest }) => {
+	    // console.log(Component,{...rest})
+	    return (
+	        <Route {...rest} 
+	            render={ props => fakeAuth.isAuth === true ? 
+	                <Component {...props} /> : 
+	                <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
+	            }
+	        />
+	    )
+	}
+```
+
+```javascript
+	<Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/order" component={Order} />
+        <PrivateRoute path='/products' component = {Products} />
+        <Route path="/user" component={User} />
+        <Route path="/login" component={Login}/>
+        <PrivateRoute path="/admin" component={Admin} />
+    </Switch>
+```
+
+		若用户已登录，fakeAuth.isAuth返回true，反之亦然。
+		如果用户已登录，路由将渲染Admin组件。否则，用户将重定义到 /login登录页面。
+		这样做的好处是，定义更明确，而且PrivateRoute可以复用。
+		下面是Login组件的代码：
+
+### src/Login.js
+
+```javascript
+	import React from 'react';
+	import { Redirect } from 'react-router-dom';
+	
+	class Login extends React.Component {
+	    constructor() {
+	        super();
+	        this.state = {
+	            redirectTo: false
+	        }
+	        // 绑定 'this'
+	        this.login = this.login.bind(this);
+	        // 也可以使用login = () =>{}
+	    }
+	    login() {
+	        fakeAuth.authenticate(() => {
+	            this.setState({ redirectTo: true })
+	        })
+	    }
+	
+	    render() {
+	        const { from } = this.props.location.state || { from: { pathname: '/' } }
+	        const { redirectTo } = this.state;
+	
+	        if (redirectTo) {
+	            return (<Redirect to={from} />)
+	        }
+	        // style = {{padding: "0 10% 0 10%",width: "80%",margin: "auto",background: "#fff"}}
+	        return (
+	            <div>
+	                <p>您必须登录才能查看页面</p>
+	                <button onClick={this.login}>登录</button>
+	            </div>
+	        )
+	    }
+	}
+	
+	/* 一个假认证功能 */
+	export const fakeAuth = {
+	    isAuth: false,
+	    authenticate(cb) {
+	        this.isAuth = true
+	        setTimeout(cb, 100)
+	    },
+	}
+	
+	export default Login;
+```
+
+		下面这行是对象的解构赋值的示例，es6的特性之一。
+		const { from } = this.props.location.state || { from: { pathname: '/' } }
+
+		让我们把所有片段拼凑到一块，这是我们使用React Router创建的应用最终效果
+
+### Demo4：保护式路由
+
+[点此查看示例代码](https://github.com/zyh19941109/React-router/tree/master/react-router)
+
+### 总结
+
+		React Router是一个帮助React构建更完美，更声明式的路由库。
+		不像React Router之前的版本，在v4中，一切就"只是组件"。
+		而且，新的设计模式也更完美的使用React的构建方式来实现。
+
+#### 本文出处，本人对其稍作修改，使其更容易读懂
+
+[文章原始链接](https://www.sitepoint.com/react-router-v4-complete-guide)

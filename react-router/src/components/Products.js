@@ -42,9 +42,9 @@ const Products = ({match}) =>{
             <h3>产品</h3>
             <ul> {linkList} </ul>
             <Route path={`${match.url}/:productId`}
-                render={ (props) => <Product data= {productsData} {...props} />}/>
+                render={ props => <Product data= {productsData} {...props} />}/>
             <Route exact path={match.url}
-                render={() => (<div><h3>请选择一个产品</h3></div>)}/>
+                render={ _ => (<div><h3>请选择一个产品</h3></div>)}/>
         </div>
     )
 }
