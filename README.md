@@ -419,13 +419,13 @@
 
 ```javascript
 	<Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/order" component={Order} />
-        <PrivateRoute path='/products' component = {Products} />
-        <Route path="/user" component={User} />
-        <Route path="/login" component={Login}/>
-        <PrivateRoute path="/admin" component={Admin} />
-    </Switch>
+		<Route exact path="/" component={Home} />
+		<Route path="/order" component={Order} />
+		<PrivateRoute path='/products' component = {Products} />
+		<Route path="/user" component={User} />
+		<Route path="/login" component={Login}/>
+		<PrivateRoute path="/admin" component={Admin} />
+	</Switch>
 ```
 
 		若用户已登录，fakeAuth.isAuth返回true，反之亦然。
@@ -485,8 +485,9 @@
 ```
 
 		下面这行是对象的解构赋值的示例，es6的特性之一。
+		
 		const { from } = this.props.location.state || { from: { pathname: '/' } }
-
+		
 		让我们把所有片段拼凑到一块，这是我们使用React Router创建的应用最终效果
 
 ### Demo4：保护式路由
@@ -501,4 +502,4 @@
 
 #### 本文出处，本人对其稍作修改，使其更容易读懂
 
-[文章原始链接](https://www.sitepoint.com/react-router-v4-complete-guide)
+[文章原始链接，请点此查看](https://www.sitepoint.com/react-router-v4-complete-guide)
