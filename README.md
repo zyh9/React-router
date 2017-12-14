@@ -1,5 +1,29 @@
 ## React-router
 
+### 开场白
+
+		React 是一个很流行的库，多用于创建在客户端渲染的单页应用(SPAs)。
+		一个SPA会有很多视图（也可以称为页面），不像传统的多页应用，视图之间的跳转不应该导致整个页面被重新加载。
+		相反，我们希望视图就在当前页面里渲染。那些习惯于多页应用的最终用户，期望在一个SPA中应该包含以下特性：
+		
+			应用中每个视图都应该有对应的唯一URL用来区分视图。以便用户可以在之后通过书签收藏的URL指向引用资源 - 例如：www.example.com/products。
+			
+			浏览器的前进后退按钮应该正常工作。
+			
+			动态生成的嵌套视图更应该有成对应的URL - 例如：example.com/products/shoes/101，101是产品id。
+		
+		路由跳转是指在同步保持浏览器URL的过程中渲染页面中的视图。React Router 让你声明式的操作路由跳转。
+		声明式路由方法，通过说"路由应该是这样的"，允许你控制应用中的数据流：
+		
+			<Route path="/about" component={About}/>
+		
+		你可以把<Route>组件放在任意你想要路由渲染的地方。
+		由于我们所需要接触的<Route>，<Link>以及其他React Router的API都只是组件，所以你可以非常方便的在React里使用路由。
+		
+		有一个常见的误区，大家都认为React Router是由facebook官方开发的一个路由解决方案。
+		实际上，它是一个因其设计和简易性而流行的第三方库。如果你的需求只局限于路由的跳转，你可以无需太多麻烦，就可以从头开始实现一个自定义的路由。
+		但是，了解React Router的基础知识可以让你更清楚的认识一个路由是怎么工作的。
+
 ### 安装React-router
 
 		React Router库包含三个包： react-router, react-router-dom, 和 react-router-native
@@ -450,7 +474,7 @@
 	        // 也可以使用login = () =>{}
 	    }
 	    login() {
-	        fakeAuth.authenticate(() => {
+	        fakeAuth.auth(() => {
 	            this.setState({ redirectTo: true })
 	        })
 	    }
@@ -475,7 +499,7 @@
 	/* 一个假认证功能 */
 	export const fakeAuth = {
 	    isAuth: false,
-	    authenticate(cb) {
+	    auth(cb) {
 	        this.isAuth = true
 	        setTimeout(cb, 100)
 	    },

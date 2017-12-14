@@ -12,7 +12,7 @@ class Login extends React.Component {
         // 也可以使用login = () =>{}
     }
     login() {
-        fakeAuth.authenticate(() => {
+        fakeAuth.auth(() => {
             this.setState({ redirectTo: true })
         })
     }
@@ -37,7 +37,7 @@ class Login extends React.Component {
 /* 一个假认证功能 */
 export const fakeAuth = {
     isAuth: false,
-    authenticate(cb) {
+    auth(cb) {
         this.isAuth = true
         setTimeout(cb, 100)
     },

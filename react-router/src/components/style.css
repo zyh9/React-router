@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+input {
+  text-align: left;
+}
+ul,
+li {
+  list-style: none;
+}
+.app > a {
+  width: 1.06666667rem;
+  height: 0.4rem;
+  font-size: 0.32rem;
+  color: #37afff;
+  display: inline-block;
+  text-align: center;
+  line-height: 0.4rem;
+}
+.products a {
+  height: 0.4rem;
+  font-size: 0.32rem;
+  color: #37afff;
+  display: inline-block;
+  line-height: 0.4rem;
+}
+.order a {
+  height: 0.4rem;
+  font-size: 0.32rem;
+  color: #37afff;
+  display: inline-block;
+  text-align: center;
+  line-height: 0.4rem;
+}
+button {
+  width: 1.06666667rem;
+  height: 0.4rem;
+  font-size: 0.29333333rem;
+  background: #ddd;
+  box-sizing: content-box;
+  border: 1px solid #333;
+  border-radius: 0.06666667rem;
+  margin-left: 0.26666667rem;
+}
+ul,
+h3,
+p {
+  padding-left: 0.26666667rem;
+}
+h3 {
+  font-size: 0.37333333rem;
+}
+p {
+  font-size: 0.32rem;
+}
