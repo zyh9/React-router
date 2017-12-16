@@ -14,7 +14,7 @@
 			
 			动态生成的嵌套视图更应该有成对应的URL
 			
-				例如：example.com/products/shoes/101 -- 101是产品id
+				例如：example.com/products/101 -- 101是产品id
 		
 		路由跳转是指在同步保持浏览器URL的过程中渲染页面中的视图。React Router 让你声明式的操作路由跳转。
 		声明式路由方法，通过说"路由应该是这样的"，允许你控制应用中的数据流：
@@ -31,7 +31,8 @@
 
 ### 安装React-router
 
-		React Router库包含三个包： react-router, react-router-dom, 和 react-router-native
+		React Router库包含三个包： react-router，react-router-dom，和 react-router-native
+		
 		react-router是路由的核心包，而其他两个是基于特定环境的
 		如果你在开发一个网站，你应该使用react-router-dom
 		如果你在移动应用的开发环境使用React Native，你应该使用react-router-native
@@ -187,6 +188,7 @@
 			<Route path="/order" component={Order}/>
 			<Route path="/user" component={User}/>
 			<Route path="/:id" render = {()=> (<p>不加Switch的后果，一旦与之匹配就会被渲染出来</p>)}/>
+			
 			当URL为/order，所有匹配/order路径的route都会被渲染。
 			所以，那个path为:id的<Route>会跟着order组件一块渲染。
 			设计就是如此。但是，若这不是你想要的结果，你应该给你的routes添加<Switch>组件。
