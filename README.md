@@ -523,7 +523,7 @@
 
 ### Demo4：保护式路由
 
-[点此查看示例代码](https://github.com/zyh19941109/React-router/tree/master/react-router)
+[点此查看示例代码](https://github.com/zyh19941109/React-Router/tree/master/React-Router)
 
 ### 总结
 
