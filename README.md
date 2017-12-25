@@ -2,7 +2,7 @@
 
 ### 开场白
 
-> [react-router官网](https://reacttraining.com/react-router/)
+> [React-router官网](https://reacttraining.com/react-router/)
 
 		React 是一个很流行的库，多用于创建在客户端渲染的单页应用(SPAs)。
 		一个SPA会有很多视图（也可以称为页面），不像传统的多页应用，视图之间的跳转不应该导致整个页面被重新加载。
